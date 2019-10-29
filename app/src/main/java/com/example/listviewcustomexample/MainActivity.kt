@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
         )
 
         val cities: ListView = findViewById(R.id.cities)
-        val cityAdapter = CityAdapter(this, cityData)
+        val cityAdapter = CityAdapter(cityData)
 
         cities.adapter = cityAdapter
     }

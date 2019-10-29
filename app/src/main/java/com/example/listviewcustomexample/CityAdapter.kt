@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 
 
-class CityAdapter(val context: Context, val cityData: Array<City>) : BaseAdapter() {
+class CityAdapter(val cityData: Array<City>) : BaseAdapter() {
     override fun getCount(): Int {
         return cityData.size
     }
@@ -22,7 +22,7 @@ class CityAdapter(val context: Context, val cityData: Array<City>) : BaseAdapter
     }
 
     override fun getView(position: Int, convertView: View?, container: ViewGroup): View {
-        val convertView = LayoutInflater.from(context).inflate(R.layout.city_item,
+        val convertView = LayoutInflater.from(container.context).inflate(R.layout.city_item,
                 container, false)
 
         val cityCountry: TextView = convertView.findViewById(R.id.city_country)
