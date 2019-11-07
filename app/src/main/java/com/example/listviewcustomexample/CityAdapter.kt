@@ -40,7 +40,7 @@ class CityAdapter(val cityData: Array<City>) : BaseAdapter() {
 //        val viewHolder: ViewHolder
 //
 //        if(convertView == null){
-//            cityView = LayoutInflater.from(context).inflate(R.layout.city_item,
+//            cityView = LayoutInflater.from(container.context).inflate(R.layout.city_item,
 //                container, false)
 //
 //            viewHolder = ViewHolder()
