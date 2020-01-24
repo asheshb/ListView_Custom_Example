@@ -1,14 +1,12 @@
 package com.example.listviewcustomexample
 
-import android.graphics.Paint
-import android.graphics.Typeface
-import android.graphics.drawable.PaintDrawable
+import android.content.Context
 import android.os.Bundle
-import android.util.Log
+import android.preference.PreferenceManager
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 
+const val FAVORITE_KEY = "FAVORITE_KEY"
 
 class MainActivity : AppCompatActivity() {
 
@@ -18,6 +16,7 @@ class MainActivity : AppCompatActivity() {
 
         val cityData = fillCityData()
 
+        loadFavorites(cityData)
 
         val cities: ListView = findViewById(R.id.cities)
         val cityAdapter = CityAdapter(cityData)
@@ -26,11 +25,35 @@ class MainActivity : AppCompatActivity() {
         cities.setOnItemClickListener{
                 parent, view, position, id ->
 
-
             val city: City? = cityAdapter.getItem(position)
             city?.let{
                 city.favorite = !city.favorite
                 cityAdapter.notifyDataSetChanged()
+            }
+
+            saveFavorites(cityData)
+
+        }
+    }
+
+    private fun saveFavorites(cityData: Array<City>){
+        val favorites = cityData.filter {it.favorite}.map { it.country }
+
+        val sharedPref = getPreferences(Context.MODE_PRIVATE)
+        with(sharedPref.edit()) {
+            putStringSet(FAVORITE_KEY, favorites.toSet())
+            commit()
+        }
+    }
+
+    private fun loadFavorites(cityData: Array<City>){
+        val sharedPref = getPreferences(Context.MODE_PRIVATE)
+        val favorites = sharedPref.getStringSet(FAVORITE_KEY, null)
+
+        if(!favorites.isNullOrEmpty()){
+            favorites.forEach{country ->
+               val city = cityData.find { it.country == country }
+                city?.favorite = true
             }
         }
     }
