@@ -20,51 +20,64 @@ class CityAdapter(val cityData: Array<City>) : BaseAdapter() {
     override fun getItemId(position: Int): Long {
         return cityData[position].name.hashCode().toLong()
     }
-
-    override fun getView(position: Int, convertView: View?, container: ViewGroup): View {
-        val convertView = LayoutInflater.from(container.context).inflate(R.layout.city_item,
-                container, false)
-
-        val cityCountry: TextView = convertView.findViewById(R.id.city_country)
-        val cityName: TextView = convertView.findViewById(R.id.city_name)
-
-        cityCountry.text = getItem(position).country
-        cityName.text = getItem(position).name
-
-        return convertView
-    }
-
 //region
 //    override fun getView(position: Int, convertView: View?, container: ViewGroup): View {
-//        val cityView: View
-//        val viewHolder: ViewHolder
-//
-//        if(convertView == null){
-//            cityView = LayoutInflater.from(container.context).inflate(R.layout.city_item,
+//        val convertView = LayoutInflater.from(container.context).inflate(R.layout.city_item,
 //                container, false)
 //
-//            viewHolder = ViewHolder()
-//            with(viewHolder){
-//                cityCountry = cityView.findViewById(R.id.city_country)
-//                cityName = cityView.findViewById(R.id.city_name)
-//                cityView.tag = this
-//            }
-//        } else{
-//            cityView = convertView
-//            viewHolder = convertView.tag as ViewHolder
-//        }
+//        val cityCountry: TextView = convertView.findViewById(R.id.city_country)
+//        val cityName: TextView = convertView.findViewById(R.id.city_name)
 //
-//        with(viewHolder){
-//            cityCountry.text = getItem(position).country
-//            cityName.text = getItem(position).name
-//        }
+//        cityCountry.text = getItem(position).country
+//        cityName.text = getItem(position).name
 //
-//        return cityView
+//        return convertView
 //    }
-//
-//    private class ViewHolder{
-//        lateinit var cityCountry: TextView
-//        lateinit var cityName: TextView
-//    }
+//endregion
+
+//region
+    override fun getView(position: Int, convertView: View?, container: ViewGroup): View {
+        val cityView: View
+        val viewHolder: ViewHolder
+
+        if(convertView == null){
+            cityView = LayoutInflater.from(container.context).inflate(R.layout.city_item,
+                container, false)
+
+            viewHolder = ViewHolder()
+            with(viewHolder){
+                cityCountry = cityView.findViewById(R.id.city_country)
+                cityName = cityView.findViewById(R.id.city_name)
+                cityView.tag = this
+            }
+        } else{
+            cityView = convertView
+            viewHolder = convertView.tag as ViewHolder
+        }
+
+        with(viewHolder){
+            val city = getItem(position)
+            cityCountry.text = city.country
+            cityName.text = city.name
+
+
+            if(city.favorite){
+                cityView.setBackgroundColor(androidx.core.content.ContextCompat
+                    .getColor(cityView.context, R.color.colorFavorite))
+
+            } else{
+                cityView.setBackgroundColor(androidx.core.content.ContextCompat
+                    .getColor(cityView.context, android.R.color.white))
+            }
+
+        }
+
+        return cityView
+    }
+
+    private class ViewHolder{
+        lateinit var cityCountry: TextView
+        lateinit var cityName: TextView
+    }
 //endregion
 }
