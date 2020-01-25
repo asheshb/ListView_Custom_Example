@@ -9,14 +9,14 @@ import androidx.appcompat.app.AppCompatActivity
 const val FAVORITE_KEY = "FAVORITE_KEY"
 
 class MainActivity : AppCompatActivity() {
+    val cityData = fillCityData()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val cityData = fillCityData()
 
-        loadFavorites(cityData)
+        loadFavorites()
 
         val cities: ListView = findViewById(R.id.cities)
         val cityAdapter = CityAdapter(cityData)
@@ -31,12 +31,11 @@ class MainActivity : AppCompatActivity() {
                 cityAdapter.notifyDataSetChanged()
             }
 
-            saveFavorites(cityData)
-
+            saveFavorites()
         }
     }
 
-    private fun saveFavorites(cityData: Array<City>){
+    private fun saveFavorites(){
         val favorites = cityData.filter {it.favorite}.map { it.country }
 
         val sharedPref = getPreferences(Context.MODE_PRIVATE)
@@ -46,16 +45,15 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun loadFavorites(cityData: Array<City>){
+    private fun loadFavorites(){
         val sharedPref = getPreferences(Context.MODE_PRIVATE)
         val favorites = sharedPref.getStringSet(FAVORITE_KEY, null)
 
-        if(!favorites.isNullOrEmpty()){
-            favorites.forEach{country ->
-               val city = cityData.find { it.country == country }
-                city?.favorite = true
-            }
+        favorites?.forEach{country ->
+           val city = cityData.find { it.country == country }
+            city?.favorite = true
         }
+
     }
 
 

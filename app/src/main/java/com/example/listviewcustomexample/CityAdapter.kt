@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
-
+import androidx.core.content.ContextCompat
 
 class CityAdapter(val cityData: Array<City>) : BaseAdapter() {
     override fun getCount(): Int {
@@ -62,11 +62,11 @@ class CityAdapter(val cityData: Array<City>) : BaseAdapter() {
 
 
             if(city.favorite){
-                cityView.setBackgroundColor(androidx.core.content.ContextCompat
+                cityView.setBackgroundColor(ContextCompat
                     .getColor(cityView.context, R.color.colorFavorite))
 
             } else{
-                cityView.setBackgroundColor(androidx.core.content.ContextCompat
+                cityView.setBackgroundColor(ContextCompat
                     .getColor(cityView.context, android.R.color.white))
             }
 
