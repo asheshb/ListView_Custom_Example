@@ -23,9 +23,7 @@ class MainActivity : AppCompatActivity() {
         val cityAdapter = CityAdapter(cityData)
         cities.adapter = cityAdapter
 
-        cities.setOnItemClickListener{
-                parent, view, position, id ->
-
+        cities.setOnItemClickListener{parent, view, position, id ->
 
             val city: City? = cityAdapter.getItem(position)
             city?.let{
