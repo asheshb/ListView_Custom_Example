@@ -11,13 +11,11 @@ import androidx.core.content.ContextCompat
 
 
 class MainActivity : AppCompatActivity() {
+    val cityData = fillCityData()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        val cityData = fillCityData()
-
 
         val cities: ListView = findViewById(R.id.cities)
         val cityAdapter = CityAdapter(cityData)
